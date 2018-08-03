@@ -1,20 +1,45 @@
-import * as React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
+import * as Expo from 'expo'
+import * as React from 'react'
+import { Platform, StyleSheet, StatusBar } from 'react-native'
+import { Container, Header, Left, Icon, Body, Right, Title } from 'native-base'
 // import { AppLoading, Asset, Font, Icon } from 'expo';
 // import AppNavigator from './navigation/AppNavigator';
 
 export default class App extends React.Component {
+  state = {
+    isReady: false
+  }
+
+  componentWillMount() {
+    this.loadFonts()
+  }
+
+  async loadFonts () {
+    await Expo.Font.loadAsync({
+      Montserrat: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf')
+    })
+    this.setState({isReady: true})
+  }
+
   render() {
+    if (!this.state.isReady) {
+      return <Expo.AppLoading />
+    }
+
     return (
-      <View>
-        <Text>
-          If you like React on the web, you'll like React Native.
-        </Text>
-        <Text>
-          You just use native components like 'View' and 'Text',
-          instead of web components like 'div' and 'span'. Yoyo~~
-        </Text>
-      </View>
+      <Container style={{ paddingTop: Platform.OS === 'ios'? 0 : StatusBar.currentHeight}}>
+        <Header>
+          <Left>
+            <Icon name='menu' />
+          </Left>
+          <Body>
+            <Title> Welcome </Title>
+          </Body>
+          <Right />
+        </Header>
+      </Container>
     )
   }
   // state = {
