@@ -1,5 +1,5 @@
 {
-  "name": "my-new-project",
+  "name": "taskpaper-react-native",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
@@ -10,8 +10,9 @@
     "lint": "tslint src/**/*.ts",
     "validate": "npm run lint && tsc --noEmit"
   },
+  "_comment": "jest must be updated for ts-jest to work",
   "jest": {
-    "preset": "react-native",
+    "preset": "react-native", 
     "moduleFileExtensions": [
       "ts",
       "tsx",
