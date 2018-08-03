@@ -1,3 +1,4 @@
+// add a normal tslint file
 {
     "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
     "linterOptions": {
