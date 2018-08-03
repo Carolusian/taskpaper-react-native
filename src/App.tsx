@@ -1,13 +1,31 @@
 import * as Expo from 'expo'
 import * as React from 'react'
-import { Platform, StyleSheet, StatusBar } from 'react-native'
-import { Container, Header, Left, Icon, Body, Right, Title } from 'native-base'
+import { Platform, StyleSheet, StatusBar, TextInput, Dimensions, PlatformIOS } from 'react-native'
+import { 
+  StyleProvider,
+  Container, 
+  Header, 
+  Left, 
+  Icon,
+  Body, 
+  Right, 
+  Title, 
+  Content,
+  Form,
+  Button,
+  Textarea
+} from 'native-base'
+import getTheme from './theme/components'
+import variables from './theme/variables/commonColor'
 // import { AppLoading, Asset, Font, Icon } from 'expo';
 // import AppNavigator from './navigation/AppNavigator';
 
 export default class App extends React.Component {
   state = {
-    isReady: false
+    isReady: false,
+    height: Dimensions.get('screen').height,
+    headerHeight: 50,
+    statusBarHeight: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
   }
 
   componentWillMount() {
@@ -29,17 +47,37 @@ export default class App extends React.Component {
     }
 
     return (
-      <Container style={{ paddingTop: Platform.OS === 'ios'? 0 : StatusBar.currentHeight}}>
-        <Header>
-          <Left>
-            <Icon name='menu' />
-          </Left>
-          <Body>
-            <Title> Welcome </Title>
-          </Body>
-          <Right />
-        </Header>
-      </Container>
+      <StyleProvider style={getTheme(variables)}>
+        <Container style={{ paddingTop: this.state.statusBarHeight }}>
+          <Header style={{height: this.state.headerHeight}}>
+            <Left>
+              <Icon name='menu' />
+            </Left>
+            <Body>
+              <Title> Welcome </Title>
+            </Body>
+            <Right>
+              <Button transparent>
+                <Icon name='paper' />
+              </Button>
+              <Button transparent>
+                <Icon name='more' />
+              </Button>
+            </Right>
+          </Header>
+          <Content style={{ padding:0 }}>
+            <Form>
+              <TextInput multiline={true} editable={true} 
+              padding={10}
+              style={{ 
+                flex: 1, 
+                height: this.state.height - this.state.statusBarHeight! - this.state.headerHeight, 
+                textAlignVertical:'top' 
+                }}></TextInput>
+            </Form>
+          </Content>
+        </Container>
+      </StyleProvider>
     )
   }
   // state = {
